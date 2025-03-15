@@ -33,7 +33,7 @@ def recipe():
     file = request.files["image"]
     data = file.stream.read()
     data = base64.b64encode(data).decode()
-    return getImageDescription(data)
+    return render_template("recipe.html",recipe=getImageDescription(data))
 @app.route('/')
 def home():
     return render_template("index.html")
