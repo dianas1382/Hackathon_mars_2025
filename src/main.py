@@ -3,6 +3,7 @@ import dotenv
 import boto3
 import json
 import base64
+from flask import Flask
 
 
 dotenv.load_dotenv(".env", override=True)
@@ -25,48 +26,65 @@ bedrock_runtime_client = boto3.client(
 model_id = "anthropic.claude-3-5-sonnet-20241022-v2:0"
 
 
-with open('brk0s9daki0a1.jpg', 'rb') as image_file:
-    encoded_image = base64.b64encode(image_file.read()).decode()
+app = Flask(__name__)
+
+@app.route('/recipe', methods=["POST"])
+def recipe():
+    file = request.files["image"]
+    data = file.stream.read()
+    data = base64.b64encode(data).decode()
+    print(getImageDescription(data))
 
 
 
-payload = {
-    "messages": [
-        {
-            "role": "user",
-            "content": [
-                {
-                    "type": "image",
-                    "source": {
-                        "type": "base64",
-                        "media_type": "image/jpeg",
-                        "data": encoded_image
+
+
+def getImageDescription(encoded_image):
+    payload = {
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": "image/jpeg",
+                            "data": encoded_image
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "text": "What are the ingredients of the image?"
                     }
-                },
-                {
-                    "type": "text",
-                    "text": "What are the ingredients of the image?"
-                }
-            ]
-        }
-    ],
-    "max_tokens": 10000,
-    "anthropic_version": "bedrock-2023-05-31"
-}
+                ]
+            }
+        ],
+        "max_tokens": 10000,
+        "anthropic_version": "bedrock-2023-05-31"
+    }
 
-response = bedrock_runtime_client.invoke_model(
-    modelId=model_id,
-    contentType="application/json",
-    body=json.dumps(payload)
-)
+    response = bedrock_runtime_client.invoke_model(
+        modelId=model_id,
+        contentType="application/json",
+        body=json.dumps(payload)
+    )
 
-output_binary = response["body"].read()
-output_json = json.loads(output_binary)
-output = output_json["content"][0]["text"]
+    output_binary = response["body"].read()
+    output_json = json.loads(output_binary)
+    return output_json["content"][0]["text"]
 
 
+#with open('brk0s9daki0a1.jpg', 'rb') as image_file:
+#    encoded_image = base64.b64encode(image_file.read()).decode()
+#
+#
+#
+#print(getImageDescription(encoded_image))
 
-print(output)
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
