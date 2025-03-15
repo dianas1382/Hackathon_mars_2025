@@ -104,16 +104,7 @@
     z-index: 1000; /* Ensure it's on top of everything */
   }
 
-  /* Loader Animation */
-.loader {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #007BFF; /* Blue */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite; /* Spin animation */
-    margin-bottom: 20px; /* Space below the loader */
-  }
+ 
 
   /* Text Styling */
 .loading-screen p {
@@ -121,13 +112,10 @@
     color: #333;
   }
   
-  /* Spin Animation */
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+/* GIF Styling */
+.fixed_goat-gif {
+  width: 100px; /* Adjust the size of the GIF */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 20px; /* Space below the GIF */
+}
 
