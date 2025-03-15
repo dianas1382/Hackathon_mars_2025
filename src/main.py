@@ -3,7 +3,7 @@ import dotenv
 import boto3
 import json
 import base64
-from flask import Flask
+from flask import Flask, request
 
 
 dotenv.load_dotenv(".env", override=True)
@@ -33,7 +33,7 @@ def recipe():
     file = request.files["image"]
     data = file.stream.read()
     data = base64.b64encode(data).decode()
-    print(getImageDescription(data))
+    return getImageDescription(data)
 
 
 
