@@ -3,13 +3,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fancy goat</title>
+<link rel="stylesheet" href="design.css">
 </head>
 <body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+        <p>Loading...</p>
+      </div>
+
     <form action="/recipe" method="POST" enctype="multipart/form-data">
         <label for="image">Choose an image:</label>
         <input type="file" name="image" id="image" required>
         <br><br>
         <button type="submit">Submit</button>
     </form>
+    <div class="image-container">
+        <img src="logo.png" alt="">
+      </div>
+
+    <script>
+      // Show loading screen when the form is submitted
+    document.getElementById('uploadForm').addEventListener('submit', function () {
+      document.getElementById('loadingScreen').style.display = 'flex';
+    });
+  </script>
 </body>
 </html>
