@@ -3,7 +3,7 @@ import dotenv
 import boto3
 import json
 import base64
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 
 dotenv.load_dotenv(".env", override=True)
@@ -34,7 +34,9 @@ def recipe():
     data = file.stream.read()
     data = base64.b64encode(data).decode()
     return getImageDescription(data)
-
+@app.route('/')
+def home():
+    return render_template("index.html")
 
 
 
