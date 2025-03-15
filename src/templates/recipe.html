@@ -3,18 +3,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fancy goat</title>
-<link rel="stylesheet" href="static/design.css">
+<link rel="stylesheet" href="static/recipe.css">
 </head>
 <body>
-    
-    <ul>
-        {% for ingredient in ingredients %}
-        <li>{{ ingredient }}</li>
+    <div class="card">
+        <div class="image-container">
+            <img src="static/logo.png" alt="">
+        </div> 
+    </div> 
+        {% for key,values in data.items() %}
+        <div class="card">
+            <h1>{{key}}</h1>
+            {% for value in values %}
+            <p>{{value}}</p>
+            {% endfor %}
+        </div> 
         {% endfor %}
-    </ul>
-    <div class="image-container">
-        <img src="static/logo.png" alt="">
-      </div>
+
+
 
     <script>
       // Show loading screen when the form is submitted
