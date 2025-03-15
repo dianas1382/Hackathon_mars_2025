@@ -6,7 +6,12 @@
 <link rel="stylesheet" href="static/design.css">
 </head>
 <body>
-    <p>{{recipe}}</p>
+    
+    <ul>
+        {% for ingredient in ingredients %}
+        <li>{{ ingredient }}</li>
+        {% endfor %}
+    </ul>
     <div class="image-container">
         <img src="static/logo.png" alt="">
       </div>

@@ -33,7 +33,8 @@ def recipe():
     file = request.files["image"]
     data = file.stream.read()
     data = base64.b64encode(data).decode()
-    return render_template("recipe.html",recipe=getImageDescription(data))
+    result = json.loads(getImageDescription(data))
+    return render_template("recipe.html",ingredients=result["ingredients"])
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -57,7 +58,7 @@ def getImageDescription(encoded_image):
                     },
                     {
                         "type": "text",
-                        "text": "What are the ingredients of the image?"
+                        "text": "What are the ingredients of the image? respond using a json list. For instance : {ingredients:['Tomato', 'Carrot', 'Lentil']}"
                     }
                 ]
             }
