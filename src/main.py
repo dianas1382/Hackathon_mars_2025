@@ -1,11 +1,12 @@
 import os
+import uuid
 import dotenv
 import boto3
 import json
 import base64
 import sqlite3
 import jwt
-from flask import Flask, request, render_template, Response
+from flask import Flask, flash, request, render_template, Response
 
 
 dotenv.load_dotenv(".env", override=True)
@@ -42,7 +43,48 @@ def recipe():
 def home():
     return render_template("index.html")
 
+@app.route('/community',methods=['GET', 'POST'])
+def community():
+    conn = sqlite3.connect('user.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    if request.method == 'POST' and 'content' in request.form:
+        token = request.cookies.get("token")
+        try:
+            d = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        except:
+            return "unauthorized"
+        creator = d['user']
+        content = request.form['content']
+        id = uuid.uuid4()
+        uuidStr = str(id)
+        cursor.execute('INSERT INTO post (creator, content, id) VALUES (?, ?, ?)', (creator, content, uuidStr))
+        conn.commit()
+        return "Post added successfully!"
+        #flash('Post added successfully!', 'success')
+    if request.method == 'POST' and 'comment_content' in request.form:
+        token = request.cookies.get("token")
+        try:
+            d = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        except:
+            return "unauthorized"
+        creator = d['user']
+        post_id = request.form['post_id']
+        content = request.form['comment_content']
+        cursor.execute('INSERT INTO comment (id, creator, content) VALUES (?, ?, ?)', (post_id, creator, content))
+        conn.commit()
+        return "Comment added successfully!"
+        #flash('Comment added successfully!', 'success')
+    cursor.execute('SELECT * FROM post')
+    posts = cursor.fetchall()
+    comments = {}
+    for post in posts:
+        cursor.execute('SELECT * FROM comment WHERE id = ?', (post['id'],))
+        comments[post["id"]] = cursor.fetchall()
 
+    conn.close()
+
+    return render_template("community.html",posts=posts,comments=comments)
 
 @app.route('/my')
 def my():
@@ -67,7 +109,8 @@ def sign_in():
     if res is None:
         return "Not Found"
     resp = Response()
-    resp.headers["Set-Cookie"] = f"token={jwt.encode({"user": user}, JWT_SECRET, algorithm="HS256")}; HttpOnly; Secure; SameSite=Strict"
+    token = jwt.encode({"user": user}, JWT_SECRET, algorithm="HS256")
+    resp.headers["Set-Cookie"] = f"token={token}; HttpOnly; Secure; SameSite=Strict"
     return resp
 
 @app.route('/signup', methods=["GET","POST"])
@@ -134,7 +177,37 @@ def getImageDescription(encoded_image):
 
 
 
+def get_db_connection():
+    conn = sqlite3.connect('blog.db')
+    conn.row_factory = sqlite3.Row  
+    return conn
+
+def init_db():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Create posts table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL
+        )
+    ''')
+# Create comments table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS comments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            post_id INTEGER NOT NULL,
+            author TEXT NOT NULL,
+            content TEXT NOT NULL,
+            FOREIGN KEY (post_id) REFERENCES posts (id)
+        )
+    ''')
+
+    conn.commit()
+    conn.close()
+
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True)
-
-
