@@ -187,7 +187,6 @@ button:hover {
     padding: 10px; /* Inner spacing */
     margin: 20px auto; /* Center the card */
     max-width: 800px; /* Limit width */
-    max-height: 400px; /* Limit height */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
     backdrop-filter: blur(10px); /* Blur effect for transparency */
 }
