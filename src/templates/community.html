@@ -49,6 +49,10 @@
           </div>
           <div class="comments">
             <h3>Comments</h3>
+            <div class="single-comment">
+              <p class="comment-user">AI Summary</h5>
+              <p>{{ summaries[post['id']]['content'] }}</p>
+              </div>
             {% for comment in comments[post['id']] %}
             <div class="single-comment">
             <p class="comment-user">{{ comment['creator'] }}</h5>

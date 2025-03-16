@@ -73,19 +73,27 @@ def community():
         post_id = request.form['post_id']
         content = request.form['comment_content']
         cursor.execute('INSERT INTO comment (id, creator, content) VALUES (?, ?, ?)', (post_id, creator, content))
+        cursor.execute('SELECT * FROM comment WHERE id = ?', (post_id,))
+        comments = cursor.fetchall()
+        comments_str = 'OTHER COMMENT'.join([comment['content'] for comment in comments])
+        cursor.execute('DELETE FROM aisummary WHERE id = ?', (post_id,))
+        cursor.execute('INSERT INTO aisummary (id, content) VALUES (?, ?)', (post_id, getCommentSummary(comments_str)))
         conn.commit()
         return "Comment added successfully!"
         #flash('Comment added successfully!', 'success')
     cursor.execute('SELECT * FROM post')
     posts = cursor.fetchall()
     comments = {}
+    summaries = {}
     for post in posts:
         cursor.execute('SELECT * FROM comment WHERE id = ?', (post['id'],))
         comments[post["id"]] = cursor.fetchall()
+        cursor.execute('SELECT content FROM aisummary WHERE id = ?', (post['id'],))
+        summaries[post["id"]] = cursor.fetchone()
 
     conn.close()
 
-    return render_template("community.html",posts=posts,comments=comments)
+    return render_template("community.html",posts=posts,comments=comments,summaries=summaries)
 
 @app.route('/my')
 def my():
@@ -185,6 +193,32 @@ def getImageDescription(encoded_image):
     output_json = json.loads(output_binary)
     return output_json["content"][0]["text"]
 
+def getCommentSummary(comments_str):
+    payload = {
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": f"Make a summary of the following comments : {comments_str}"
+                    }
+                ]
+            }
+        ],
+        "max_tokens": 100000,
+        "anthropic_version": "bedrock-2023-05-31"
+    }
+
+    response = bedrock_runtime_client.invoke_model(
+        modelId=model_id,
+        contentType="application/json",
+        body=json.dumps(payload)
+    )
+
+    output_binary = response["body"].read()
+    output_json = json.loads(output_binary)
+    return output_json["content"][0]["text"]
 
 #with open('brk0s9daki0a1.jpg', 'rb') as image_file:
 #    encoded_image = base64.b64encode(image_file.read()).decode()
