@@ -237,7 +237,6 @@ button:hover {
     padding: 5px; /* Inner spacing */
     margin: 8px auto; /* Reduced space between comments */
     max-width: 800px; /* Limit width */
-    max-height: 100px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 
 }
