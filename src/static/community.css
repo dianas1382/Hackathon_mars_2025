@@ -1,0 +1,304 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: rgb(246,64,64);
+background: linear-gradient(120deg, rgba(246,64,64,1) 0%, rgba(233,22,103,1) 50%, rgba(223,126,68,1) 100%);
+}
+
+.card-container {
+    display: flex; /* Use Flexbox */
+    gap: 20px; /* Space between cards */
+    padding: 20px; /* Padding around the container */
+    justify-content: center; /* Center the cards horizontally */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.transparent-card {
+    background: rgba(255, 255, 255, 0.18); /* Semi-transparent white */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Inner spacing */
+    margin: 20px auto; /* Center the card */
+    max-width: 800px; /* Limit width */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    backdrop-filter: blur(10px); /* Blur effect for transparency */
+    resize: both; /* Allow resizing */
+    overflow: auto; /* Ensure content stays within the card */
+}
+
+/* Big card styling */
+.big {
+    flex: 3; /* Takes up twice as much space as the small card */
+    min-width: 600px; /* Minimum width for the big card */
+    max-width: 800px; /* Maximum width for the big card */
+}
+
+/* Small card styling */
+.small {
+    flex: 1; /* Takes up half the space of the big card */
+    min-width: 200px; /* Minimum width for the small card */
+    max-width: 300px; /* Maximum width for the small card */
+    max-height: 300px; /* Maximum height for the small card */
+    background: rgba(229, 189, 46, 0.283); /* Semi-transparent white */
+
+}
+
+
+
+/* Container */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center; /* Center align text */
+    padding: 60px 20px; /* Add padding */
+    background: ff;
+    color: #fff; /* White text color */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    margin: 20px auto; /* Center the header */
+    max-width: 800px; /* Limit width */
+    overflow: hidden; /* Hide overflow for pseudo-element */
+    position: relative; /* For pseudo-element */
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Space between text and image */
+    align-items: center; /* Align items vertically */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.text-content {
+    flex: 1;
+}
+
+header:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+    transition: box-shadow 0.3s ease; /* Smooth transition */
+}
+
+h1{
+    font-size: 2.8em; /* Large font size */
+    font-weight: 800; /* Bold text */
+    margin-bottom: 15px; /* Space below the <h1> */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 3px; /* Add spacing between letters */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Text shadow for depth */
+    position: relative; /* For pseudo-element */
+    z-index: 1; /* Ensure text is above the pseudo-element */
+}
+
+
+h3 {
+    font-size: 1.3em; /* Medium font size */
+    font-weight: 300; /* Light font weight */
+    line-height: 1.6; /* Improve readability */
+    color: #f0f0f0; /* Slightly lighter text color */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+    position: relative; /* For pseudo-element */
+    z-index: 1; /* Ensure text is above the pseudo-element */
+}
+
+/* Navigation */
+nav {
+    background: #444;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Space between form elements */
+}
+
+textarea {
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 1em;
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px; /* Minimum height for textarea */
+    text-align: left;
+}
+
+button {
+    padding: 10px 10px;
+    background-color: #dc0f0f; /* Vibrant orange */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 1em;
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+button:hover {
+    background-color: #c60e0e; /* Darker orange on hover */
+}
+
+/* Post card styling */
+.post {
+    background: rgba(255, 255, 255, 0.564); /* Semi-transparent white */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px;
+    margin-bottom: 20px; /* Space between posts */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.single-post {
+    background: rgba(245, 241, 241, 0); /* Semi-transparent white */
+
+    border: 2px solid white; /* White border */
+    border-radius: 15px; /* Rounded corners */
+    padding: 10px; /* Inner spacing */
+    margin: 20px auto; /* Center the card */
+    max-width: 800px; /* Limit width */
+    max-height: 400px; /* Limit height */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    backdrop-filter: blur(10px); /* Blur effect for transparency */
+}
+
+.post:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); /* Increase shadow on hover */
+    transition: box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.post p {
+    font-size: 1.0em;
+    color: #1c1b1b; /* Dark gray for post content */
+    line-height: 1.1; /* Improve readability */
+    text-align: left;
+    padding: 5px;
+    padding-left: 10px; /* Inner spacing */
+}
+
+.post-creator {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #171313; /* Dark gray for post content */
+    line-height: 1.1; /* Improve readability */
+    text-align: left;
+    padding-left: 15px; /* Inner spacing */
+
+}
+
+/* Comments section styling */
+.comments {
+    margin-top: 2px; /* Reduced space above comments */
+    padding-top: 2px;
+    border-top: 1px solid #eee; /* Light gray separator */
+    text-align: left;
+}
+
+.comments h3 {
+    font-size: 1.4em;
+    color: #333; /* Dark gray for comment heading */
+    margin-bottom: 2px; /* Reduced space below comment heading */
+    margin-top: 2px; /* Reduced space above comment heading */
+}
+
+.single-comment {
+    background: rgba(255, 255, 255, 0); /* Semi-transparent white */
+    border: 2px solid white; /* White border */
+    border-radius: 15px; /* Rounded corners */
+    padding: 5px; /* Inner spacing */
+    margin: 8px auto; /* Reduced space between comments */
+    max-width: 800px; /* Limit width */
+    max-height: 100px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+
+}
+
+.comment-user {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #171313; /* Dark gray for post content */
+    line-height: 0.5; /* Improve readability */
+    text-align: left;
+    margin-block: 2px; /* Reduced space below heading */
+    padding-block: 2px;
+}
+
+.comments p {
+    font-size: 1em;
+    color: #1c1b1b; /* Medium gray for comments */
+    text-align: left;
+    padding-left: 8px; /* Inner spacing */
+    margin-block: 2px; /* Reduced space below heading */
+
+}
+/* Comment form styling */
+.comments form {
+    margin-top: 15px; /* Space above comment form */
+    text-align: left;
+}
+
+.comments textarea {
+    min-height: 80px; /* Smaller height for comment textarea */
+}
+
+.comments button {
+    background-color: #dc0f0f; /* Green for comment button */
+    text-align: right; /* Align text to the right */
+    max-width: 150px; /* Limit width of button */
+    margin-left: auto; /* Align all the way to the right */
+}
+
+
+
+.comments button:hover {
+    background-color: #c60e0e; /* Darker green on hover */
+}
+
+/* Image Container */
+.image-container {
+    width: 200px; /* Set a fixed width for the container */
+    padding: 10px; /* Add padding inside the container */
+    text-align: left; /* Center the image horizontally */
+
+    margin-right: 20px;
+  }
+  
+  /* Image Styling */
+  img {
+    max-width: 100%; /* Ensure the image is responsive */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners */
+  }
+
+
+
